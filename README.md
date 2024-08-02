@@ -1,2 +1,3 @@
-# echo
-A Next.js 14 Fullstack chat and video conference application.
+# Echo
+
+Messaging and video conference application
