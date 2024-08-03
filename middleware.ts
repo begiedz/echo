@@ -1,6 +1,11 @@
-import { authMiddleware } from '@clerk/nextjs/server';
+// import { authMiddleware } from '@clerk/nextjs/server';
 
-export default authMiddleware({});
+// export default authMiddleware(() => {
+//   publicRoutes: ['/api/uploadthing'];
+// });
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+
+export default clerkMiddleware();
 
 export const config = {
   matcher: [
