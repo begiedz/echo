@@ -5,7 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
 
-const font = Lato({ weight: ['300', '400', '700'], subsets: ["latin"] });
+const font = Lato({ weight: ['300', '400', '700', '900'], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Echo - Team chat",
