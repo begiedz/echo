@@ -1,5 +1,6 @@
 'use client';
 
+import axios from "axios"
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,6 +14,7 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog";
+
 import {
   Form,
   FormControl,
@@ -21,9 +23,11 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -36,6 +40,7 @@ const formSchema = z.object({
 
 export function InitialModal() {
   const [isMounted, setisMounted] = useState(false);
+  const router = useRouter()
 
   //Fix hydration problems
   useEffect(() => {
@@ -51,8 +56,17 @@ export function InitialModal() {
   });
 
   const isLoading = form.formState.isSubmitting;
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      await axios.post("/api/servers", values);
+
+      form.reset();
+      router.refresh();
+      window.location.reload();
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   if (!isMounted) {
@@ -63,10 +77,11 @@ export function InitialModal() {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-4">
           <DialogTitle className="text-3xl font-black">
-            Create a server!
+            Create a server.
           </DialogTitle>
           <DialogDescription className="text-zinc-500">
-            To begin conversation you need to create your server. Set a name and an image.<br />Not happy with the result? Don't worry! You can always change it later.
+            To begin a conversation you need to create your server.
+            <br /> Set a name and an image.<br />Not happy with the results? Don't worry! You can always change it later.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
